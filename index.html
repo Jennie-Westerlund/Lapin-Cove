@@ -7,15 +7,15 @@
 </head>
 <body>
     <section id="Booking">
-        <select name="Room" id="room-picker">
-            <option value="budget">Budget</option>
-            <option value="standard">Standard</option>
-            <option value="luxury">Luxury</option>
-        </select>
-        <form action="index.html" method="post">
-            <input type="date" name="start-date" min="2025-01-01" max="2025-01-31">
-            <input type="date" name="end-date" min="2025-01-01" max="2025-01-31">
-            <button type="submit" nam="Book">Book</button>
+        <form action="booking.php" method="post">
+            <select name="Room" id="room-picker">
+                <option value="budget">Budget</option>
+                <option value="standard">Standard</option>
+                <option value="luxury">Luxury</option>
+            </select>
+            <input type="date" name="startDate" min="2025-01-01" max="2025-01-31">
+            <input type="date" name="endDate" min="2025-01-01" max="2025-01-31">
+            <button type="submit" name="Book">Book</button>
         </form>
     </section>
 </body>

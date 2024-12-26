@@ -8,16 +8,16 @@
 <body>
     <section id="Booking">
         <form action="booking.php" method="post">
-            <select name="Room" id="room-picker">
+            <select name="room" id="room-picker">
                 <option value="1">Budget</option>
                 <option value="2">Standard</option>
                 <option value="3">Luxury</option>
             </select>
             <input type="date" name="startDate" min="2025-01-01" max="2025-01-31">
             <input type="date" name="endDate" min="2025-01-01" max="2025-01-31">
-            <input type="checkbox" name="feature" value="1"> Electric bicycle
-            <input type="checkbox" name="feature" value="2"> Sauna
-            <input type="checkbox" name="feature" value="3"> Yatzy
+            <input type="checkbox" name="features" value="1"> Electric bicycle
+            <input type="checkbox" name="features" value="2"> Sauna
+            <input type="checkbox" name="features" value="3"> Yatzy
             <button type="submit" name="Book">Book</button>
         </form>
     </section>

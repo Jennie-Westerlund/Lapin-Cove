@@ -8,10 +8,11 @@ $database = new PDO('sqlite:' . __DIR__ . '/Backend/test.db');
 
 /* Collecting the input from user and insert it into the database */
 
-if (isset($_POST['startDate'], $_POST['endDate'], $_POST['Room'])) {
+if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
     $startDate = $_POST['startDate'];
     $endDate = $_POST['endDate'];
-    $roomId = (int)$_POST['Room'];
+    $roomId = (int)$_POST['room'];
+    $features = $_POST['features'];
 
     /* Check for overlapping bookings */
     $checkQuery = "
@@ -42,6 +43,22 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['Room'])) {
             ':endDate' => $endDate,
         ]);
 
-        echo "Your booking successful!";
+        /* Get the ID of the newly created booking */
+        $bookingId = (int)$database->lastInsertId();
+
+        /* Insert features into the Booking_Features table */
+        if (!empty($features)) {
+            $featureQuery = "INSERT INTO Booking_Features (booking_id, feature_id) VALUES (:bookingId, :featureId)";
+            $featureStmt = $database->prepare($featureQuery);
+
+            foreach ($features as $featureId) {
+                $featureStmt->execute([
+                    ':bookingId' => $bookingId,
+                    ':featureId' => (int)$featureId,
+                ]);
+            }
+        }
+
+        echo "Your booking was successful!";
     }
 }

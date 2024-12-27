@@ -14,6 +14,7 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
     $endDate = $_POST['endDate'];
     $roomId = (int)$_POST['room'];
     $features = isset($_POST['features']) && is_array($_POST['features']) ? $_POST['features'] : []; /* Features as an array in order to handle booking more than one */
+    $transferCode = $_POST['transferCode'];
 
     /* Check for overlapping bookings */
     $checkQuery = "
@@ -44,7 +45,7 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
             ':endDate' => $endDate,
         ]);
 
-        /* Get the ID of the newly created booking */
+        /* Get the ID of the created booking */
         $bookingId = (int)$database->lastInsertId();
 
         /* Insert features into the Booking_Features table if there is any features */
@@ -61,5 +62,7 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
         }
 
         echo "Your booking was successful!";
+
+        /* Börja koda på att validera transferCode! Ska de vara här eller innan vi skickar bokingarna till databasen? Ifall de försöker med en icke-godkänd kod och sen är datument ändå bokat redan enligt databasen? */
     }
 }

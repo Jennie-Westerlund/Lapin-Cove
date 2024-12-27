@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-header(__DIR__ . '/index.html');
+require(__DIR__ . '/index.html');
 
 $database = new PDO('sqlite:' . __DIR__ . '/Backend/test.db');
+
 
 /* Collecting the input from user and insert it into the database */
 
@@ -12,7 +13,7 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
     $startDate = $_POST['startDate'];
     $endDate = $_POST['endDate'];
     $roomId = (int)$_POST['room'];
-    $features = $_POST['features'];
+    $features = isset($_POST['features']) && is_array($_POST['features']) ? $_POST['features'] : []; /* Features as an array in order to handle booking more than one */
 
     /* Check for overlapping bookings */
     $checkQuery = "
@@ -46,7 +47,7 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
         /* Get the ID of the newly created booking */
         $bookingId = (int)$database->lastInsertId();
 
-        /* Insert features into the Booking_Features table */
+        /* Insert features into the Booking_Features table if there is any features */
         if (!empty($features)) {
             $featureQuery = "INSERT INTO Booking_Features (booking_id, feature_id) VALUES (:bookingId, :featureId)";
             $featureStmt = $database->prepare($featureQuery);

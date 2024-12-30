@@ -6,6 +6,17 @@ require(__DIR__ . '/index.html');
 
 $database = new PDO('sqlite:' . __DIR__ . '/Backend/test.db');
 
+/* My functions  */
+function amountOfDays($date1, $date2)
+{
+
+    /* Calculating the difference in timestamps */
+    $diff = strtotime($date2) - strtotime($date1) + 1;
+
+    /* 1 day = 24 hours */
+    /* 24 * 60 * 60 = 86400 seconds */
+    return abs(round($diff / 86400));
+}
 
 /* Collecting the input from user and insert it into the database */
 
@@ -17,12 +28,7 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
     $transferCode = $_POST['transferCode'];
 
     /* Check for overlapping bookings */
-    $checkQuery = "
-        SELECT COUNT(*) FROM Bookings
-        WHERE Room_id = :roomId
-        AND (
-            (Start_date <= :endDate AND End_date >= :startDate)
-        )
+    $checkQuery = " SELECT COUNT(*) FROM Bookings WHERE Room_id = :roomId AND ((Start_date <= :endDate AND End_date >= :startDate))
     ";
     $checkStmt = $database->prepare($checkQuery);
     $checkStmt->execute([
@@ -36,6 +42,18 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
     if ($existingBookings > 0) {
         echo "Sorry, the selected room is already booked for the specified dates.";
     } else {
+        /* Calculate prize of the booking*/
+        $roomPrizeQuery = "SELECT Prize FROM Rooms WHERE id = :roomId"; /* Get prize of room from database */
+        $roomPrizeStmt = $database->prepare($roomPrizeQuery);
+        $roomPrizeStmt->execute([
+            ':roomId' => $roomId,
+        ]);
+
+        $roomPrize = $roomPrizeStmt->fetchColumn(); /* Get the actual prize value */
+        $dateDuration = amountOfDays($startDate, $endDate); /* Get amount of days they wish to book */
+        $roomTotalPrize = $roomPrize * $dateDuration;
+
+
         /* Using a prepared statement to safely insert the data, if not already booked */
         $bookingQuery = "INSERT INTO Bookings (Room_id, Start_date, End_date) VALUES (:roomId, :startDate, :endDate)";
         $statement = $database->prepare($bookingQuery);
@@ -61,8 +79,13 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
             }
         }
 
-        echo "Your booking was successful!";
+        $bookedDaysQuery = "SELECT CAST((julianday(end_date) - julianday(start_date) + 1) AS INTEGER) AS inclusive_days FROM bookings WHERE id = :bookingId";
+        $daysStmt = $database->prepare($bookedDaysQuery);
+        $daysStmt->execute([
+            ':bookingId' => $bookingId,
+        ]);
+        $daysResult = $daysStmt->fetch(PDO::FETCH_ASSOC);
 
-        /* Börja koda på att validera transferCode! Ska de vara här eller innan vi skickar bokingarna till databasen? Ifall de försöker med en icke-godkänd kod och sen är datument ändå bokat redan enligt databasen? */
+        echo "Your booking was successful! You have booked $dateDuration days for a total of $roomTotalPrize$";
     }
 }

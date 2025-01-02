@@ -51,7 +51,22 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
 
         $roomPrize = $roomPrizeStmt->fetchColumn(); /* Get the actual prize value */
         $dateDuration = amountOfDays($startDate, $endDate); /* Get amount of days they wish to book */
-        $roomTotalPrize = $roomPrize * $dateDuration;
+        $roomTotalPrize = $roomPrize * $dateDuration; /* Calculate the prize for the whole stay */
+
+        /* Calculate prize of features */
+        $featurePrizeQuery = "SELECT Prize FROM Features WHERE id = :featureId";
+        $featurePrizeStmt = $database->prepare($featurePrizeQuery);
+
+        foreach ($features as $featureId) {
+            $featurePrizeStmt->execute([
+                ':featureId' => (int)$featureId,
+            ]);
+        }
+
+        $featureTotalPrize = $featurePrizeStmt->fetchColumn(); /* Get the actual prize value */
+        $bookingTotalPrize = $roomTotalPrize + $featureTotalPrize; /* Add the total prize for the rooms and all features, if there's no features booked it will just add 0 */
+
+        /* Jag ska ta fram pris för features med en foreach loop och sen ta totalCost med transferCode mot API med Guzzle !!!!!!!! */
 
 
         /* Using a prepared statement to safely insert the data, if not already booked */
@@ -79,13 +94,8 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
             }
         }
 
-        $bookedDaysQuery = "SELECT CAST((julianday(end_date) - julianday(start_date) + 1) AS INTEGER) AS inclusive_days FROM bookings WHERE id = :bookingId";
-        $daysStmt = $database->prepare($bookedDaysQuery);
-        $daysStmt->execute([
-            ':bookingId' => $bookingId,
-        ]);
-        $daysResult = $daysStmt->fetch(PDO::FETCH_ASSOC);
 
-        echo "Your booking was successful! You have booked $dateDuration days for a total of $roomTotalPrize$";
+
+        echo "Your booking was successful! You have booked $dateDuration days for a total of $roomTotalPrize$, features for a total of $featureTotalPrize$ which brings your total cost up to $bookingTotalPrize$";
     }
 }

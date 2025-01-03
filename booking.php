@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 require(__DIR__ . '/index.html');
 
+require 'vendor/autoload.php';
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+
 $database = new PDO('sqlite:' . __DIR__ . '/Backend/test.db');
 
 /* My functions  */
@@ -42,60 +47,92 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
     if ($existingBookings > 0) {
         echo "Sorry, the selected room is already booked for the specified dates.";
     } else {
-        /* Calculate prize of the booking*/
-        $roomPrizeQuery = "SELECT Prize FROM Rooms WHERE id = :roomId"; /* Get prize of room from database */
-        $roomPrizeStmt = $database->prepare($roomPrizeQuery);
-        $roomPrizeStmt->execute([
+        /* Calculate price of the booking*/
+        $roomPriceQuery = "SELECT Prize FROM Rooms WHERE id = :roomId";
+        $roomPriceStmt = $database->prepare($roomPriceQuery);
+        $roomPriceStmt->execute([
             ':roomId' => $roomId,
         ]);
+        $roomPrice = $roomPriceStmt->fetchColumn();
+        $dateDuration = amountOfDays($startDate, $endDate);
+        $roomTotalPrice = $roomPrice * $dateDuration;
 
-        $roomPrize = $roomPrizeStmt->fetchColumn(); /* Get the actual prize value */
-        $dateDuration = amountOfDays($startDate, $endDate); /* Get amount of days they wish to book */
-        $roomTotalPrize = $roomPrize * $dateDuration; /* Calculate the prize for the whole stay */
-
-        /* Calculate prize of features */
-        $featurePrizeQuery = "SELECT Prize FROM Features WHERE id = :featureId";
-        $featurePrizeStmt = $database->prepare($featurePrizeQuery);
+        /* Calculate price of features */
+        $featureTotalPrice = 0; /* Initialize total feature price */
+        $featurePriceQuery = "SELECT Prize FROM Features WHERE id = :featureId";
+        $featurePriceStmt = $database->prepare($featurePriceQuery);
 
         foreach ($features as $featureId) {
-            $featurePrizeStmt->execute([
+            $featurePriceStmt->execute([
                 ':featureId' => (int)$featureId,
             ]);
+            $featurePrice = $featurePriceStmt->fetchColumn(); /* Get price for features */
+            $featureTotalPrice += $featurePrice; // Add this feature's price to total
         }
 
-        $featureTotalPrize = $featurePrizeStmt->fetchColumn(); /* Get the actual prize value */
-        $bookingTotalPrize = $roomTotalPrize + $featureTotalPrize; /* Add the total prize for the rooms and all features, if there's no features booked it will just add 0 */
+        $bookingTotalPrice = $roomTotalPrice + $featureTotalPrice;
 
-        /* Jag ska ta fram pris för features med en foreach loop och sen ta totalCost med transferCode mot API med Guzzle !!!!!!!! */
+        /* Checking validity of transfer code and amount vs cost against the API */
+        if (isset($_POST['transferCode'])) {
+            $client = new Client(); /* Starting new guzzle client */
 
+            /* Sanitize the transfer code */
+            $transferCode = htmlspecialchars(trim($_POST['transferCode']));
 
-        /* Using a prepared statement to safely insert the data, if not already booked */
-        $bookingQuery = "INSERT INTO Bookings (Room_id, Start_date, End_date) VALUES (:roomId, :startDate, :endDate)";
-        $statement = $database->prepare($bookingQuery);
-        $statement->execute([
-            ':roomId' => $roomId,
-            ':startDate' => $startDate,
-            ':endDate' => $endDate,
-        ]);
-
-        /* Get the ID of the created booking */
-        $bookingId = (int)$database->lastInsertId();
-
-        /* Insert features into the Booking_Features table if there is any features */
-        if (!empty($features)) {
-            $featureQuery = "INSERT INTO Booking_Features (booking_id, feature_id) VALUES (:bookingId, :featureId)";
-            $featureStmt = $database->prepare($featureQuery);
-
-            foreach ($features as $featureId) {
-                $featureStmt->execute([
-                    ':bookingId' => $bookingId,
-                    ':featureId' => (int)$featureId,
+            try {
+                $response = $client->post('https://www.yrgopelago.se/centralbank/transferCode', [
+                    'form_params' => [
+                        'transferCode' => $transferCode,
+                        'totalCost' => $bookingTotalPrice
+                    ]
                 ]);
+
+                $transferCodeResult = json_decode($response->getBody()->getContents(), true);
+
+                // Check if the transfer is valid and has sufficient funds
+                if ($$transferCodeResult['transferCode'] === 'valid' && $$transferCodeResult['amount'] >= $bookingTotalPrice) {
+                    // Transfer is valid and amount is sufficient
+                    // Proceed with booking
+
+                    /* Using a prepared statement to safely insert the data, if not already booked */
+                    $bookingQuery = "INSERT INTO Bookings (Room_id, Start_date, End_date) VALUES (:roomId, :startDate, :endDate)";
+                    $statement = $database->prepare($bookingQuery);
+                    $statement->execute([
+                        ':roomId' => $roomId,
+                        ':startDate' => $startDate,
+                        ':endDate' => $endDate,
+                    ]);
+
+                    /* Get the ID of the created booking */
+                    $bookingId = (int)$database->lastInsertId();
+
+                    /* Insert features into the Booking_Features table if there is any features */
+                    if (!empty($features)) {
+                        $featureQuery = "INSERT INTO Booking_Features (booking_id, feature_id) VALUES (:bookingId, :featureId)";
+                        $featureStmt = $database->prepare($featureQuery);
+
+                        foreach ($features as $featureId) {
+                            $featureStmt->execute([
+                                ':bookingId' => $bookingId,
+                                ':featureId' => (int)$featureId,
+                            ]);
+                        }
+                    }
+
+
+                    echo "Your booking was successful! You have booked $dateDuration days for a total of $roomTotalPrice$, features for a total of $featureTotalPrice$ which brings your total cost up to $bookingTotalPrice$";
+                } else {
+                    // Transfer is invalid or insufficient funds
+                    echo "Invalid transfer code or insufficient funds.";
+                }
+            } catch (RequestException $e) {
+                // Handle any errors that occurred during the request
+                echo "Error validating transfer code: " . $e->getMessage();
             }
         }
 
 
 
-        echo "Your booking was successful! You have booked $dateDuration days for a total of $roomTotalPrize$, features for a total of $featureTotalPrize$ which brings your total cost up to $bookingTotalPrize$";
+        /* Jag ska ta fram pris för features med en foreach loop och sen ta totalCost med transferCode mot API med Guzzle !!!!!!!! */
     }
 }

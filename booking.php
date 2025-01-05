@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-require(__DIR__ . '/index.html');
-
 require 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
 $database = new PDO('sqlite:' . __DIR__ . '/Backend/test.db');
+
 
 /* My functions  */
 function amountOfDays($date1, $date2)
@@ -21,6 +20,46 @@ function amountOfDays($date1, $date2)
     /* 1 day = 24 hours */
     /* 24 * 60 * 60 = 86400 seconds */
     return abs(round($diff / 86400));
+}
+
+function validateTransferCode(string $transferCode, int $totalCost): bool
+{
+    $client = new Client();
+
+    try {
+        $response = $client->post('https://www.yrgopelago.se/centralbank/transferCode', [
+            'form_params' => [
+                'transferCode' => $transferCode,
+                'totalcost' => $totalCost
+            ]
+        ]);
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        return isset($data['status']) && $data['status'] === 'success';
+    } catch (RequestException $e) {
+        error_log('Error validating transfer code: ' . $e->getMessage());
+        return false;
+    }
+}
+
+function makeDeposit(string $transferCode): bool
+{
+    $client = new Client();
+
+    try {
+        $response = $client->post('https://www.yrgopelago.se/centralbank/deposit', [
+            'form_params' => [
+                'user' => 'Jennie',
+                'transferCode' => $transferCode
+            ]
+        ]);
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        return isset($data['status']) && $data['status'] === 'success';
+    } catch (RequestException $e) {
+        error_log('Error validating transfer code: ' . $e->getMessage());
+        return false;
+    }
 }
 
 /* Collecting the input from user and insert it into the database */
@@ -67,52 +106,29 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
                 ':featureId' => (int)$featureId,
             ]);
             $featurePrice = $featurePriceStmt->fetchColumn(); /* Get price for features */
-            $featureTotalPrice += $featurePrice; // Add this feature's price to total
+            $featureTotalPrice += $featurePrice; /* Add every feature's price to total */
         }
 
         $totalCost = $roomTotalPrice + $featureTotalPrice;
-        $transferCode = htmlspecialchars(trim($_POST['transferCode']));
+        $transferCode = htmlspecialchars(trim($_POST['transferCode'])); /* Washing transferCode from user */
 
-        /* Validate transferCode through the centralbank API  */
-        function validateTransferCode(string $transferCode, int $totalCost): bool
-        {
-            $client = new Client();
 
-            try {
-                $response = $client->post('https://www.yrgopelago.se/centralbank/transferCode', [
-                    'form_params' => [
-                        'transferCode' => $transferCode,
-                        'totalcost' => $totalCost
-                    ]
-                ]);
-                $data = json_decode($response->getBody()->getContents(), true);
-
-                return isset($data['status']) && $data['status'] === 'success';
-            } catch (RequestException $e) {
-                error_log('Error validating transfer code: ' . $e->getMessage());
-                return false;
-            }
+        /* Validate transferCode */
+        if (!validateTransferCode($transferCode, (int)$totalCost)) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Invalid transfer code or insufficient funds, please contact the Centralbank.'
+            ]);
+            exit;
         }
 
         /* Deposit to my account at the centralbank */
-        function makeDeposit(string $transferCode): bool
-        {
-            $client = new Client();
-
-            try {
-                $response = $client->post('https://www.yrgopelago.se/centralbank/deposit', [
-                    'form_params' => [
-                        'user' => 'Jennie',
-                        'transferCode' => $transferCode,
-                    ]
-                ]);
-                $data = json_decode($response->getBody()->getContents(), true);
-
-                return isset($data['status']) && $data['status'] === 'success';
-            } catch (RequestException $e) {
-                error_log('Error validating transfer code: ' . $e->getMessage());
-                return false;
-            }
+        if (!makeDeposit($transferCode)) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Deposit failed. Please contact support.'
+            ]);
+            exit;
         }
 
 
@@ -140,8 +156,39 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
                 ]);
             }
         }
+        /* Respons/recipt for user */
 
+        $featuresNames = [];
 
-        echo "Your booking was successful! You have booked $dateDuration days for a total of $roomTotalPrice$, features for a total of $featureTotalPrice$ which brings your total cost up to $totalCost$";
+        foreach ($features as $featureId) {
+            $featuresNameQuery = "SELECT feature FROM Features WHERE id = :featureId";
+            $featuresNameStmt = $database->prepare($featuresNameQuery);
+            $featuresNameStmt->execute([
+                ':featureId' => (int)$featureId,
+            ]);
+
+            $featureName = $featuresNameStmt->fetchColumn();
+            if ($featureName !== false) {
+                $featuresNames[] = $featureName; /* Add the feature name to the array */
+            }
+        }
+
+        $response = [
+            "island" => "Corsica",
+            "hotel" => "Lapin Cove",
+            "arrival_date" => $startDate,
+            "departure_date" => $endDate,
+            "total_cost" => $totalCost . "$",
+            "stars" => "3",
+            "features" => $featuresNames,
+            "additional_info" => [
+                "greeting" => "Thank you for booking Lapin Cove",
+                "imageUrl" => "https://cdn.britannica.com/32/177732-050-99BCA269/Bastia-Corsica-France.jpg"
+            ]
+        ];
+
+        header('Content-Type: application/json');
+        echo json_encode($response, JSON_PRETTY_PRINT); /* Return as JSON */
+        exit;
     }
 }

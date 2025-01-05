@@ -1,0 +1,38 @@
+/* variables */
+:root {
+    --Primary:rgb(215, 171, 132, 100);
+    --accent: wheat;
+    --Dark: rgb(0, 0, 0);
+    --background: rgb(5 10 15);
+
+    --Primary-font: "PT Serif", serif;
+
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+Body {
+    margin: 0;
+}
+
+
+
+/* Nav */
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 1rem 0 1rem;
+}
+
+
+/* Hero */
+.heroVideo {
+    width: 100vw;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}

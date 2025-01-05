@@ -70,69 +70,78 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
             $featureTotalPrice += $featurePrice; // Add this feature's price to total
         }
 
-        $bookingTotalPrice = $roomTotalPrice + $featureTotalPrice;
+        $totalCost = $roomTotalPrice + $featureTotalPrice;
+        $transferCode = htmlspecialchars(trim($_POST['transferCode']));
 
-        /* Checking validity of transfer code and amount vs cost against the API */
-        if (isset($_POST['transferCode'])) {
-            $client = new Client(); /* Starting new guzzle client */
-
-            /* Sanitize the transfer code */
-            $transferCode = htmlspecialchars(trim($_POST['transferCode']));
+        /* Validate transferCode through the centralbank API  */
+        function validateTransferCode(string $transferCode, int $totalCost): bool
+        {
+            $client = new Client();
 
             try {
                 $response = $client->post('https://www.yrgopelago.se/centralbank/transferCode', [
                     'form_params' => [
                         'transferCode' => $transferCode,
-                        'totalCost' => $bookingTotalPrice
+                        'totalcost' => $totalCost
                     ]
                 ]);
+                $data = json_decode($response->getBody()->getContents(), true);
 
-                $transferCodeResult = json_decode($response->getBody()->getContents(), true);
-
-                // Check if the transfer is valid and has sufficient funds
-                if ($$transferCodeResult['transferCode'] === 'valid' && $$transferCodeResult['amount'] >= $bookingTotalPrice) {
-                    // Transfer is valid and amount is sufficient
-                    // Proceed with booking
-
-                    /* Using a prepared statement to safely insert the data, if not already booked */
-                    $bookingQuery = "INSERT INTO Bookings (Room_id, Start_date, End_date) VALUES (:roomId, :startDate, :endDate)";
-                    $statement = $database->prepare($bookingQuery);
-                    $statement->execute([
-                        ':roomId' => $roomId,
-                        ':startDate' => $startDate,
-                        ':endDate' => $endDate,
-                    ]);
-
-                    /* Get the ID of the created booking */
-                    $bookingId = (int)$database->lastInsertId();
-
-                    /* Insert features into the Booking_Features table if there is any features */
-                    if (!empty($features)) {
-                        $featureQuery = "INSERT INTO Booking_Features (booking_id, feature_id) VALUES (:bookingId, :featureId)";
-                        $featureStmt = $database->prepare($featureQuery);
-
-                        foreach ($features as $featureId) {
-                            $featureStmt->execute([
-                                ':bookingId' => $bookingId,
-                                ':featureId' => (int)$featureId,
-                            ]);
-                        }
-                    }
-
-
-                    echo "Your booking was successful! You have booked $dateDuration days for a total of $roomTotalPrice$, features for a total of $featureTotalPrice$ which brings your total cost up to $bookingTotalPrice$";
-                } else {
-                    // Transfer is invalid or insufficient funds
-                    echo "Invalid transfer code or insufficient funds.";
-                }
+                return isset($data['status']) && $data['status'] === 'success';
             } catch (RequestException $e) {
-                // Handle any errors that occurred during the request
-                echo "Error validating transfer code: " . $e->getMessage();
+                error_log('Error validating transfer code: ' . $e->getMessage());
+                return false;
+            }
+        }
+
+        /* Deposit to my account at the centralbank */
+        function makeDeposit(string $transferCode): bool
+        {
+            $client = new Client();
+
+            try {
+                $response = $client->post('https://www.yrgopelago.se/centralbank/deposit', [
+                    'form_params' => [
+                        'user' => 'Jennie',
+                        'transferCode' => $transferCode,
+                    ]
+                ]);
+                $data = json_decode($response->getBody()->getContents(), true);
+
+                return isset($data['status']) && $data['status'] === 'success';
+            } catch (RequestException $e) {
+                error_log('Error validating transfer code: ' . $e->getMessage());
+                return false;
             }
         }
 
 
+        /* Using a prepared statement to safely insert the data, if not already booked */
+        $bookingQuery = "INSERT INTO Bookings (Room_id, Start_date, End_date) VALUES (:roomId, :startDate, :endDate)";
+        $statement = $database->prepare($bookingQuery);
+        $statement->execute([
+            ':roomId' => $roomId,
+            ':startDate' => $startDate,
+            ':endDate' => $endDate,
+        ]);
 
-        /* Jag ska ta fram pris för features med en foreach loop och sen ta totalCost med transferCode mot API med Guzzle !!!!!!!! */
+        /* Get the ID of the created booking */
+        $bookingId = (int)$database->lastInsertId();
+
+        /* Insert features into the Booking_Features table if there is any features */
+        if (!empty($features)) {
+            $featureQuery = "INSERT INTO Booking_Features (booking_id, feature_id) VALUES (:bookingId, :featureId)";
+            $featureStmt = $database->prepare($featureQuery);
+
+            foreach ($features as $featureId) {
+                $featureStmt->execute([
+                    ':bookingId' => $bookingId,
+                    ':featureId' => (int)$featureId,
+                ]);
+            }
+        }
+
+
+        echo "Your booking was successful! You have booked $dateDuration days for a total of $roomTotalPrice$, features for a total of $featureTotalPrice$ which brings your total cost up to $totalCost$";
     }
 }

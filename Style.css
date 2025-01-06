@@ -2,13 +2,16 @@
 :root {
     --Primary:rgb(215, 171, 132, 100);
     --accent: wheat;
-    --Dark: rgb(0, 0, 0);
-    --background: rgb(5 10 15);
-
-    --Primary-font: "PT Serif", serif;
+    --Dark: #362815;
+    --background:  rgb(250, 243, 233);
+    --Primary-font: ;
 
 }
 
+@font-face {
+    font-family: 'Iowan Old Style';
+    src: url('Assets/Fonts/iowanoldst-bt/bitstream-iowan-old-style-bt-586c36a8d7712.ttf');
+  }
 
 * {
     box-sizing: border-box;
@@ -18,6 +21,31 @@ Body {
     margin: 0;
 }
 
+/* Fonts */
+h1 {
+    font-size: 30px;
+    font-family: 'Iowan Old Style', 'Times New Roman', serif;
+    color: var(--Dark);
+}
+
+
+h2 {
+    font-size: 30px;
+    font-family: 'Iowan Old Style', 'Times New Roman', serif;
+    color: var(--Dark);
+}
+
+h3 {
+    font-size: 21px;
+    font-family: 'Iowan Old Style', 'Times New Roman', serif;
+    color: var(--Dark);
+}
+
+p {
+    font-size: 18px;
+    color: var(--Dark);
+}
+
 
 
 /* Nav */
@@ -25,14 +53,152 @@ nav {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 0 1rem 0 1rem;
+    padding: 1rem 5rem 1rem 5rem;
+    background-color: var(--background);
+}
+
+.navLink {
+    font-size: 20px;
+    color: #362815;
+    text-decoration: none;
+    align-self: center;
+}
+
+.navLogo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navStars {
+    height: 20px;
+    width:fit-content;
+    display: block;
+    object-fit: cover;
+}
+
+.navLogoText {
+    font-size: 30px;
+    font-family: 'Iowan Old Style', 'Times New Roman', serif;
+    color: var(--Dark);
+    margin: 0;
 }
 
 
 /* Hero */
 .heroVideo {
     width: 100vw;
-    height: auto;
+    height: 100vh;
     display: block;
     object-fit: cover;
+}
+
+.ctaButton {
+    border: none;
+    outline: none;
+    background-color: #E6C583;
+    padding: 1.5rem;
+}
+
+.ctaButton a {
+    font-size: 30px;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+/* About  */
+#about {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-self: center;
+    background-color: var(--background);
+}
+
+.aboutImage {
+    width: 600px;
+    height: 500px;
+    object-fit: cover;
+    display: block;
+}
+
+.aboutTitle {
+    justify-self: flex-start;
+}
+
+.aboutText {
+    flex-direction: row;
+    max-width:400px;
+    margin: 0 5rem 0 5rem;
+}
+
+/* Rooms */
+
+.budget {
+    margin: 3rem 5rem 0 5rem;
+    padding: 0 0 0 0;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-self: center;
+    background-color: var(--background);
+}
+
+.budgetText {
+    flex-direction: row;
+    max-width:400px;
+    margin: 0 5rem 0 5rem;
+}
+
+.budgetImage {
+    width: 600px;
+    height: 500px;
+    object-fit: cover;
+    display: block;
+}
+
+
+.standard {
+    margin: 3rem 5rem 0 5rem;
+    padding: 0 0 0 0;
+    display: flex;
+    flex-direction: row;
+    justify-self: center;
+    background-color:  var(--background);
+}
+
+.standardText {
+    flex-direction: row;
+    max-width:400px;
+    margin: 0 5rem 0 5rem;
+}
+
+.standardImage {
+    width: 600px;
+    height: 500px;
+    object-fit: cover;
+    display: block;
+}
+
+
+.luxury {
+    margin: 3rem 5rem 0 5rem;
+    padding: 0 0 0 0;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-self: center;
+    background-color:  var(--background);
+}
+
+.luxuryText {
+    flex-direction: row;
+    max-width:400px;
+    margin: 0 5rem 0 5rem;
+}
+
+.luxuryImage {
+    width: 600px;
+    height: 500px;
+    object-fit: cover;
+    display: block;
 }

@@ -4,38 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="Stylesheet.css">
+    <link rel="stylesheet" href="Style.css">
 </head>
 <body>
+    <section id="Hero">
     <header>
         <nav>
-            <p>Rooms</p>
-            <p>Features</p>
-            <h1>Lapin Cove</h1>
-            <p>Book</p>
-            <p>Contact</p>
+            <a class="navLink" href="#">About</a>
+            <a class="navLink" href="#">Rooms</a>
+            <div class="navLogo">
+                <img class="navStars" src="Assets/Stars.png" alt="Three stars">
+                <h1 class="navLogoText">Lapin Cove</h1>
+            </div>
+            <a class="navLink" href="#">Features</a>
+            <a class="navLink" href="#">Contact</a>
         </nav>
     </header>
-    <section id="Hero">
-        <video class="heroVideo" src="Assets/TestHero.mov" autoplay muted></video>
-        <button>Book now</button>
+        <video class="heroVideo" autoplay loop muted>
+            <source src="Assets/TestHero.mov" type="video/mp4">
+          </video>
+          <img src="Assets/Logo2.png" alt="Lapin Cove Logo">
+        <button class="ctaButton" type="button">
+            <a href="#">Book now</a>
+        </button>
     </section>
-    <section id="About">
-        <h2>A stay to remember</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id ex sit cum itaque voluptas earum! Dolorum earum sequi, perspiciatis ad fuga expedita quia illo, delectus sit hic facilis quasi.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id ex sit cum itaque voluptas earum! Dolorum earum sequi, perspiciatis ad fuga expedita quia illo, delectus sit hic facilis quasi.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id ex sit cum itaque voluptas earum! Dolorum earum sequi, perspiciatis ad fuga expedita quia illo, delectus sit hic facilis quasi.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id ex sit cum itaque voluptas earum! Dolorum earum sequi, perspiciatis ad fuga expedita quia illo, delectus sit hic facilis quasi.</p>
-        <img src="/Assets/about1.jpeg" alt="Image of the pool-area and backside of the hotel">
+    <section id="about">
+        <article class="aboutText">
+            <h2 class="aboutTitle">A stay to remember</h2>
+            <p class="aboutInfo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id ex sit cum itaque voluptas earum! Dolorum earum sequi, perspiciatis ad fuga expedita quia illo, delectus sit hic facilis quasi. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id ex sit cum itaque voluptas earum! Dolorum earum sequi, perspiciatis ad fuga expedita quia illo, delectus sit hic facilis quasi.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id ex sit cum itaque voluptas earum! Dolorum earum sequi, perspiciatis ad fuga expedita quia illo, delectus sit hic facilis quasi.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id ex sit cum itaque voluptas earum! Dolorum earum sequi, perspiciatis ad fuga expedita quia illo, delectus sit hic facilis quasi.</p>
+        </article>
+        <img class="aboutImage" src="/Assets/about1.jpeg" alt="Image of the pool-area and backside of the hotel">
     </section>
     <section id="Rooms">
-        <h2>Rooms</h2>
-        <h3>Budget</h3>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci, nemo, molestiae excepturi nesciunt aliquam vero velit suscipit soluta laboriosam iste aspernatur, commodi unde nulla libero! Velit explicabo voluptates blanditiis doloribus!</p>
-        <img src="Assets/Budget-room1.jpeg" alt="picture of the Budget room Lapin Cove offers">
-        <h3>Standard</h3>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci, nemo, molestiae excepturi nesciunt aliquam vero velit suscipit soluta laboriosam iste aspernatur, commodi unde nulla libero! Velit explicabo voluptates blanditiis doloribus!</p>
-        <img src="Assets/Standard-room1.jpeg" alt="picture of the Standard room Lapin Cove offers">
-        <h3>Luxury</h3>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci, nemo, molestiae excepturi nesciunt aliquam vero velit suscipit soluta laboriosam iste aspernatur, commodi unde nulla libero! Velit explicabo voluptates blanditiis doloribus!</p>
-        <img src="Assets/Standard-room2.jpeg" alt="picture of the Luxury room Lapin Cove offers">
+        <article class="budget">
+            <article class="budgetText">
+                <h2>Lucie</h2>
+                <h3>Budget-consious without breaking the bank</h3>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci, nemo, molestiae excepturi nesciunt aliquam vero velit suscipit soluta laboriosam iste aspernatur, commodi unde nulla libero! Velit explicabo voluptates blanditiis doloribus!</p>
+            </article>
+            <img class="budgetImage" src="Assets/Budget-room1.jpeg" alt="picture of the Budget room Lapin Cove offers">
+        </article>
+        <article class="standard">
+            <article class="standardText">
+                <h2>Amélie</h2>
+                <h3>An elivated stay </h3>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci, nemo, molestiae excepturi nesciunt aliquam vero velit suscipit soluta laboriosam iste aspernatur, commodi unde nulla libero! Velit explicabo voluptates blanditiis doloribus!</p>
+            </article>
+            <img class="standardImage" src="Assets/Standard-room1.jpeg" alt="picture of the Standard room Lapin Cove offers">
+        </article>
+        <article class="luxury">
+            <article class="luxuryText">
+                <h2>Celiné</h2>
+                <h3>Luxury pouring through every crevase</h3>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci, nemo, molestiae excepturi nesciunt aliquam vero velit suscipit soluta laboriosam iste aspernatur, commodi unde nulla libero! Velit explicabo voluptates blanditiis doloribus!</p>
+            </article>
+            <img class="luxuryImage" src="Assets/Standard-room2.jpeg" alt="picture of the Luxury room Lapin Cove offers">
+        </article>
     </section>
     <section id="Features">
         <h2>Featurers</h2>

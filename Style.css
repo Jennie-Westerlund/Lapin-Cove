@@ -3,9 +3,10 @@
     --Primary:rgb(215, 171, 132, 100);
     --accent: wheat;
     --Dark: #362815;
-    --background:  rgb(250, 243, 233);
-    --Primary-font: ;
+    --background:rgb(252, 248, 243);
+    --backgroundLowOpacity:rgba(252, 248, 243, 0.8);
 
+    --Primary-font:'Iowan Old Style', 'Times New Roman', serif;
 }
 
 @font-face {
@@ -24,20 +25,20 @@ Body {
 /* Fonts */
 h1 {
     font-size: 30px;
-    font-family: 'Iowan Old Style', 'Times New Roman', serif;
+    font-family: var(--Primary-font);
     color: var(--Dark);
 }
 
 
 h2 {
     font-size: 30px;
-    font-family: 'Iowan Old Style', 'Times New Roman', serif;
+    font-family: var(--Primary-font);
     color: var(--Dark);
 }
 
 h3 {
     font-size: 21px;
-    font-family: 'Iowan Old Style', 'Times New Roman', serif;
+    font-family: var(--Primary-font);
     color: var(--Dark);
 }
 
@@ -53,13 +54,17 @@ nav {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 1rem 5rem 1rem 5rem;
-    background-color: var(--background);
+    padding: 1rem 3rem 1rem 3rem;
+    background-color:var(--backgroundLowOpacity);
+    position: fixed;
+    width: 100vw;
+    z-index: 20;
 }
 
 .navLink {
     font-size: 20px;
-    color: #362815;
+    font-family: var(--Primary-font);
+    color: var(--Dark);
     text-decoration: none;
     align-self: center;
 }
@@ -71,14 +76,14 @@ nav {
 }
 
 .navStars {
-    height: 20px;
+    height: 18px;
     width:fit-content;
     display: block;
     object-fit: cover;
 }
 
 .navLogoText {
-    font-size: 30px;
+    font-size: 26px;
     font-family: 'Iowan Old Style', 'Times New Roman', serif;
     color: var(--Dark);
     margin: 0;
@@ -86,22 +91,44 @@ nav {
 
 
 /* Hero */
+
+#hero {
+    background-color: rgb(213, 199, 181);
+}
 .heroVideo {
     width: 100vw;
-    height: 100vh;
+    height: 780px;
     display: block;
     object-fit: cover;
+    opacity: 40%;
 }
 
+.heroContent {
+    width: 100vw;
+    height: 780px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.heroLogo {
+    width: 150px;
+    margin: 0 0 100px 0;
+}
 .ctaButton {
     border: none;
     outline: none;
     background-color: #E6C583;
     padding: 1.5rem;
+    margin: 0 0 100px 0;
 }
 
 .ctaButton a {
-    font-size: 30px;
+    font-size: 26px;
     color: white;
     text-decoration: none;
     text-transform: uppercase;
@@ -109,7 +136,7 @@ nav {
 
 /* About  */
 #about {
-    margin: 0;
+    margin: 3rem 5rem 3rem 5rem;
     display: flex;
     flex-direction: row;
     justify-self: center;
@@ -136,7 +163,7 @@ nav {
 /* Rooms */
 
 .budget {
-    margin: 3rem 5rem 0 5rem;
+    margin: 3rem 5rem 3rem 5rem;
     padding: 0 0 0 0;
     display: flex;
     flex-direction: row-reverse;
@@ -159,7 +186,7 @@ nav {
 
 
 .standard {
-    margin: 3rem 5rem 0 5rem;
+    margin: 3rem 5rem 3rem 5rem;
     padding: 0 0 0 0;
     display: flex;
     flex-direction: row;
@@ -182,7 +209,7 @@ nav {
 
 
 .luxury {
-    margin: 3rem 5rem 0 5rem;
+    margin: 3rem 5rem 3rem 5rem;
     padding: 0 0 0 0;
     display: flex;
     flex-direction: row-reverse;
@@ -202,3 +229,44 @@ nav {
     object-fit: cover;
     display: block;
 }
+
+/* Features */
+
+#features {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 3rem 5rem 3rem 5rem;
+}
+
+/* .featuresImage {
+    max-width: 400px;
+    height: 600px;
+    object-fit: cover;
+    display: block;
+    margin: 5px;
+    animation: name duration timing-function delay iteration-count direction fill-mode;
+    transform: scale(1);
+    transition: var(--transition-slow);
+} */
+
+.imageContainer {
+    overflow: hidden; /* Ensures the zoom doesn't overflow the container */
+    display: inline-block; /* Prevents block-level behavior */
+    margin: 5px;
+    background-color: var(--Dark);
+  }
+
+  .featuresImage {
+    display: block;
+    width: 380px;
+    height: 600px;
+    object-fit: cover;
+    justify-self: center;
+    transition: transform 1.0s ease;
+  }
+
+  .imageContainer:hover img {
+    transform: scale(1.1); /* Zoom in slightly */
+    opacity: 40%;
+  }

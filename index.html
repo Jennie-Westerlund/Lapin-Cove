@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="Style.css">
 </head>
 <body>
-    <section id="Hero">
+    <section id="hero">
     <header>
         <nav>
             <a class="navLink" href="#">About</a>
@@ -21,12 +21,14 @@
         </nav>
     </header>
         <video class="heroVideo" autoplay loop muted>
-            <source src="Assets/TestHero.mov" type="video/mp4">
-          </video>
-          <img src="Assets/Logo2.png" alt="Lapin Cove Logo">
+            <source src="Assets/HeroVideo1.mp4" type="video/mp4">
+        </video>
+        <article class="heroContent">
+        <img class="heroLogo" src="Assets/Logo2.png" alt="Lapin Cove Logo">
         <button class="ctaButton" type="button">
-            <a href="#">Book now</a>
+            <a href="#">Book a room</a>
         </button>
+    </article>
     </section>
     <section id="about">
         <article class="aboutText">
@@ -61,9 +63,17 @@
             <img class="luxuryImage" src="Assets/Standard-room2.jpeg" alt="picture of the Luxury room Lapin Cove offers">
         </article>
     </section>
-    <section id="Features">
-        <h2>Featurers</h2>
-        <img src="Assets/Feature2.jpeg" alt="">
+    <section id="features">
+        <!-- <h2>Featurers</h2> -->
+        <div class="imageContainer">
+            <img class="featuresImage" src="Assets/Feature2.jpeg" alt="A male and female kissing while holding bikes">
+        </div>
+        <div class="imageContainer">
+            <img class="featuresImage" src="Assets/Feature3.jpeg" alt="Woman on a bike in summer">
+        </div>
+        <div class="imageContainer">
+            <img class="featuresImage" src="Assets/Feature4.jpeg" alt="Champange tower">
+        </div>
     </section>
     <section id="Booking">
         <form action="booking.php" method="post">
@@ -75,7 +85,7 @@
             <input type="date" name="startDate" min="2025-01-01" max="2025-01-31">
             <input type="date" name="endDate" min="2025-01-01" max="2025-01-31">
             <input type="checkbox" name="features[]" value="1"> Electric bicycle
-            <input type="checkbox" name="features[]" value="2"> Sauna
+            <input type="checkbox" name="features[]" value="2"> Sauna/Champain Bar
             <input type="checkbox" name="features[]" value="3"> Yatzy
             <input type="text" name="transferCode"> 
             <button type="submit" name="Book">Book</button>

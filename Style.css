@@ -4,6 +4,7 @@
     --accent: wheat;
     --Dark: #362815;
     --background:rgb(252, 248, 243);
+    --backgroundDark:rgb(226, 217, 207);
     --backgroundLowOpacity:rgba(252, 248, 243, 0.8);
 
     --Primary-font:'Iowan Old Style', 'Times New Roman', serif;
@@ -239,20 +240,9 @@ nav {
     margin: 3rem 5rem 3rem 5rem;
 }
 
-/* .featuresImage {
-    max-width: 400px;
-    height: 600px;
-    object-fit: cover;
-    display: block;
-    margin: 5px;
-    animation: name duration timing-function delay iteration-count direction fill-mode;
-    transform: scale(1);
-    transition: var(--transition-slow);
-} */
-
 .imageContainer {
-    overflow: hidden; /* Ensures the zoom doesn't overflow the container */
-    display: inline-block; /* Prevents block-level behavior */
+    overflow: hidden;
+    display: inline-block;
     margin: 5px;
     background-color: var(--Dark);
   }
@@ -267,6 +257,20 @@ nav {
   }
 
   .imageContainer:hover img {
-    transform: scale(1.1); /* Zoom in slightly */
+    transform: scale(1.1); 
     opacity: 40%;
   }
+
+/* Footer */
+
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--backgroundDark);
+    padding: 5rem;
+}
+
+.footerAbout {
+    width: 400px;
+}

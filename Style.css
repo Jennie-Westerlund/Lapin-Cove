@@ -1,13 +1,17 @@
 /* variables */
 :root {
     --Primary:rgb(215, 171, 132, 100);
-    --accent: wheat;
+    --accent: #E6C583;
     --Dark: #362815;
+    --black: black;
+    --white: white;
     --background:rgb(252, 248, 243);
     --backgroundDark:rgb(226, 217, 207);
     --backgroundLowOpacity:rgba(252, 248, 243, 0.8);
+    --backgroundHeroFilter: rgb(213, 199, 181);
 
-    --Primary-font:'Iowan Old Style', 'Times New Roman', serif;
+    --titleFont:'Iowan Old Style', 'Times New Roman', serif;
+    --bodyTextFont: 'Poppins', sans-serif;
 }
 
 @font-face {
@@ -26,28 +30,36 @@ Body {
 /* Fonts */
 h1 {
     font-size: 30px;
-    font-family: var(--Primary-font);
+    font-family: var(--titleFont);
     color: var(--Dark);
 }
 
 
 h2 {
     font-size: 30px;
-    font-family: var(--Primary-font);
+    font-family: var(--titleFont);
     color: var(--Dark);
 }
 
 h3 {
     font-size: 21px;
-    font-family: var(--Primary-font);
+    font-family: var(--titleFont);
     color: var(--Dark);
 }
 
 p {
     font-size: 18px;
     color: var(--Dark);
+    font-family: var(--bodyTextFont);
 }
 
+button {
+    font-family: var(--bodyTextFont);
+}
+
+a {
+    text-decoration: none;
+}
 
 
 /* Nav */
@@ -64,7 +76,7 @@ nav {
 
 .navLink {
     font-size: 20px;
-    font-family: var(--Primary-font);
+    font-family: var(--bodyTextFont);
     color: var(--Dark);
     text-decoration: none;
     align-self: center;
@@ -94,7 +106,7 @@ nav {
 /* Hero */
 
 #hero {
-    background-color: rgb(213, 199, 181);
+    background-color: var(--backgroundHeroFilter);
 }
 .heroVideo {
     width: 100vw;
@@ -123,14 +135,14 @@ nav {
 .ctaButton {
     border: none;
     outline: none;
-    background-color: #E6C583;
+    background-color: var(--accent);
     padding: 1.5rem;
     margin: 0 0 100px 0;
 }
 
 .ctaButton a {
     font-size: 26px;
-    color: white;
+    color: var(--white);
     text-decoration: none;
     text-transform: uppercase;
 }
@@ -164,6 +176,7 @@ nav {
 /* Rooms */
 
 .budget {
+    position: relative;
     margin: 3rem 5rem 3rem 5rem;
     padding: 0 0 0 0;
     display: flex;
@@ -185,8 +198,21 @@ nav {
     display: block;
 }
 
+.budgetPrice {
+    position: absolute;
+    bottom: 0rem;
+    left: 0rem;
+    background-color: var(--accent);
+    padding: 1rem;
+    margin: 0rem;
+    z-index: 1;
+    color: var(--white);
+}
+
+
 
 .standard {
+    position: relative;
     margin: 3rem 5rem 3rem 5rem;
     padding: 0 0 0 0;
     display: flex;
@@ -208,8 +234,20 @@ nav {
     display: block;
 }
 
+.standardPrice {
+    position: absolute;
+    bottom: 0rem;
+    right: 0rem;
+    background-color: var(--accent);
+    padding: 1rem;
+    margin: 0rem;
+    z-index: 1;
+    color: var(--white);
+}
+
 
 .luxury {
+    position: relative;
     margin: 3rem 5rem 3rem 5rem;
     padding: 0 0 0 0;
     display: flex;
@@ -231,8 +269,18 @@ nav {
     display: block;
 }
 
-/* Features */
+.luxuryPrice {
+    position: absolute;
+    bottom: 0rem;
+    left: 0rem;
+    background-color: var(--accent);
+    padding: 1rem;
+    margin: 0rem;
+    z-index: 1;
+    color: var(--white);
+}
 
+/* Features */
 #features {
     display: flex;
     flex-direction: row;
@@ -241,25 +289,59 @@ nav {
 }
 
 .imageContainer {
+    position: relative;
     overflow: hidden;
     display: inline-block;
     margin: 5px;
     background-color: var(--Dark);
-  }
+}
 
-  .featuresImage {
+.featuresImage {
     display: block;
     width: 380px;
     height: 600px;
     object-fit: cover;
     justify-self: center;
     transition: transform 1.0s ease;
-  }
+}
 
-  .imageContainer:hover img {
-    transform: scale(1.1); 
-    opacity: 40%;
-  }
+.imageContainer h3 {
+    position: absolute;
+    top: 1rem;
+    left: 1.5rem;
+    color: var(--white);
+    z-index: 1;
+}
+
+
+.featuresText {
+    position: absolute;
+    top: 3rem;
+    left: 0.6rem;
+    color: var(--white);
+    z-index: 1;
+    width: 70%;
+    padding: 1rem;
+}
+
+.featuresPrice {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    color: var(--white);
+    z-index: 1;
+    width:fit-content;
+    margin: 0px;
+    padding: 0.6rem;
+    background-color: var(--accent);
+}
+
+.imageContainer:hover img {
+    transform: scale(1.1);
+    opacity: 30%;
+}
+
+
 
 /* Footer */
 
@@ -269,6 +351,17 @@ footer {
     justify-content: space-between;
     background-color: var(--backgroundDark);
     padding: 5rem;
+}
+
+footer a {
+    color: var(--Dark);
+    font-family: var(--bodyTextFont);
+}
+
+footer ul {
+    text-decoration: none;
+    list-style: none;
+    padding: 0rem;
 }
 
 .footerAbout {

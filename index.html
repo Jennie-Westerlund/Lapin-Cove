@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title> Hotel Lapin Cove</title>
     <link rel="stylesheet" href="Style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
     <section id="hero">
@@ -34,50 +37,61 @@
     <section id="about">
         <article class="aboutText">
             <h2 class="aboutTitle">A stay to remember</h2>
-            <p class="aboutInfo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id ex sit cum itaque voluptas earum! Dolorum earum sequi, perspiciatis ad fuga expedita quia illo, delectus sit hic facilis quasi. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id ex sit cum itaque voluptas earum! Dolorum earum sequi, perspiciatis ad fuga expedita quia illo, delectus sit hic facilis quasi.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id ex sit cum itaque voluptas earum! Dolorum earum sequi, perspiciatis ad fuga expedita quia illo, delectus sit hic facilis quasi.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id ex sit cum itaque voluptas earum! Dolorum earum sequi, perspiciatis ad fuga expedita quia illo, delectus sit hic facilis quasi.</p>
+            <p class="aboutInfo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id ex sit cum itaque voluptas earum! Dolorum earum sequi, perspiciatis ad fuga expedita quia illo, delectus sit hic facilis quasi. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id ex sit cum itaque voluptas earum! Dolorum earum sequi, perspiciatis ad fuga expedita quia illo, delectus sit hic facilis quasi.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
         </article>
         <img class="aboutImage" src="/Assets/about1.jpeg" alt="Image of the pool-area and backside of the hotel">
     </section>
-    <section id="Rooms">
+    <section id="rooms">
         <article class="budget">
             <article class="budgetText">
                 <h2>Lucie</h2>
-                <h3>Budget-consious without breaking the bank</h3>
+                <h3>Budget-consious without compromising comfort</h3>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci, nemo, molestiae excepturi nesciunt aliquam vero velit suscipit soluta laboriosam iste aspernatur, commodi unde nulla libero! Velit explicabo voluptates blanditiis doloribus!</p>
             </article>
             <img class="budgetImage" src="Assets/Budget-room1.jpeg" alt="picture of the Budget room Lapin Cove offers">
+            <p class="budgetPrice">2$</p>
         </article>
         <article class="standard">
             <article class="standardText">
                 <h2>Amélie</h2>
-                <h3>An elivated stay </h3>
+                <h3>An elivated standard of living </h3>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci, nemo, molestiae excepturi nesciunt aliquam vero velit suscipit soluta laboriosam iste aspernatur, commodi unde nulla libero! Velit explicabo voluptates blanditiis doloribus!</p>
             </article>
             <img class="standardImage" src="Assets/Standard-room1.jpeg" alt="picture of the Standard room Lapin Cove offers">
+            <p class="standardPrice">3$</p>
         </article>
         <article class="luxury">
             <article class="luxuryText">
                 <h2>Celiné</h2>
-                <h3>Luxury pouring through every crevase</h3>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci, nemo, molestiae excepturi nesciunt aliquam vero velit suscipit soluta laboriosam iste aspernatur, commodi unde nulla libero! Velit explicabo voluptates blanditiis doloribus!</p>
+                <h3>A truly luxurious stay</h3>
+                <p>A true luxury experience where you feel pampered and cared for every minute of every day.</p>
             </article>
             <img class="luxuryImage" src="Assets/Standard-room2.jpeg" alt="picture of the Luxury room Lapin Cove offers">
+            <p class="luxuryPrice">4$</p>
         </article>
     </section>
     <section id="features">
         <div class="imageContainer">
-            <img class="featuresImage" src="Assets/Feature2.jpeg" alt="A male and female kissing while holding bikes">
-        </div>
-        <div class="imageContainer">
-            <img class="featuresImage" src="Assets/Feature3.jpeg" alt="Woman on a bike in summer">
+            <img class="featuresImage" src="Assets/Feature5.jpg" alt="Woman on a bike in summer">
+            <h3>Yatzy</h3>
+            <p class="featuresText">For the ultimate mix between leasure and quality time with loved ones, book our Yatzy for your entire stay. Fun and games by the pool is the cornerstone of family-time! <i>(Family-counseling not included)</i></p>
+            <p class="featuresPrice">1$</p>
         </div>
         <div class="imageContainer">
             <img class="featuresImage" src="Assets/Feature4.jpeg" alt="Champange tower">
+            <h3>Champagne Bar</h3>
+            <p class="featuresText">Experience the true meaning of a french vacation with champagne. With our unlimited bar the xxxxxx will flow. Just don't let the golden bubbles go to your head!</p>
+            <p class="featuresPrice">3$</p>
+        </div>
+        <div class="imageContainer">
+            <img class="featuresImage" src="Assets/Feature21.jpg" alt="A male and female kissing while holding bikes">
+            <h3>Electric bicycle</h3>
+            <p class="featuresText">Enhance your stay with our electrical bikes, perfect for discovering the breathtaking coastal trails and charming villages of Corsica. Effortlessly ride through stunning landscapes, uncover hidden gems all throughout your stay.</p>
+            <p class="featuresPrice">5$</p>
         </div>
     </section>
     <section id="availability">
         <div class="content home">
-            
         </div>
     </section>
     <section id="Booking">
@@ -90,7 +104,7 @@
             <input type="date" name="startDate" min="2025-01-01" max="2025-01-31">
             <input type="date" name="endDate" min="2025-01-01" max="2025-01-31">
             <input type="checkbox" name="features[]" value="1"> Electric bicycle
-            <input type="checkbox" name="features[]" value="2"> Sauna/Champain Bar
+            <input type="checkbox" name="features[]" value="2"> Sauna/Champagne Bar
             <input type="checkbox" name="features[]" value="3"> Yatzy
             <input type="text" name="transferCode"> 
             <button type="submit" name="Book">Book</button>
@@ -100,9 +114,9 @@
         <article class="footerSocials">
             <h3>Socials</h3>
             <ul>
-                <li>Facebook</li>
-                <li>Instagram</li>
-                <li>Pinterest</li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">Pinterest</a></li>
             </ul>
         </article>
         <article class="footerContacts">

@@ -7,8 +7,7 @@ require 'vendor/autoload.php';
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
-$database = new PDO('sqlite:' . __DIR__ . '/Backend/test.db');
-
+$database = new PDO('sqlite:' . __DIR__ . '/Backend/lapinCove.db');
 
 /* My functions  */
 function amountOfDays($date1, $date2)
@@ -61,6 +60,15 @@ function makeDeposit(string $transferCode): bool
         return false;
     }
 }
+
+function getBookedDates($roomId) /* Get booked dates depending on roomId from db for flatpickr */
+{
+    global $database;
+    $stmt = $database->prepare("SELECT Start_date, End_date FROM Bookings WHERE Room_id = :roomId");
+    $stmt->execute([':roomId' => $roomId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
 /* Collecting the input from user and insert it into the database */
 
@@ -191,4 +199,12 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
         echo json_encode($response, JSON_PRETTY_PRINT); /* Return as JSON */
         exit;
     }
+}
+
+/* Flatpickr code, getting booked dates to use in calendar.js */
+if (isset($_GET['getBookedDates'])) {
+    $roomId = $_GET['roomId'];
+    $bookedDates = getBookedDates($roomId);
+    echo json_encode($bookedDates);
+    exit;
 }

@@ -14,14 +14,14 @@
     <section id="hero">
     <header>
         <nav>
-            <a class="navLink" href="#">About</a>
-            <a class="navLink" href="#">Rooms</a>
+            <a class="navLink" href="#about">About</a>
+            <a class="navLink" href="#rooms">Rooms</a>
             <div class="navLogo">
                 <img class="navStars" src="Assets/Stars.png" alt="Three stars">
                 <h1 class="navLogoText">Lapin Cove</h1>
             </div>
-            <a class="navLink" href="#">Features</a>
-            <a class="navLink" href="#">Contact</a>
+            <a class="navLink" href="#features">Features</a>
+            <a class="navLink" href="#footer">Contact</a>
         </nav>
     </header>
         <video class="heroVideo" autoplay loop muted>
@@ -29,48 +29,46 @@
         </video>
         <article class="heroContent">
         <img class="heroLogo" src="Assets/Logo2.png" alt="Lapin Cove Logo">
-        <button class="ctaButton" type="button">
-            <a href="#">Book a room</a>
-        </button>
+        <a href="#booking" class="ctaButton">Book a room</a>
     </article>
     </section>
-    <section id="about">
+    <section class="fadeSection" id="about">
         <article class="aboutText">
             <h2 class="aboutTitle">A stay to remember</h2>
-            <p class="aboutInfo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id ex sit cum itaque voluptas earum! Dolorum earum sequi, perspiciatis ad fuga expedita quia illo, delectus sit hic facilis quasi. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam id ex sit cum itaque voluptas earum! Dolorum earum sequi, perspiciatis ad fuga expedita quia illo, delectus sit hic facilis quasi.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <p class="aboutInfo">At Lapin Cove hotel we believe in the power of a good vacation. In todays world stress and demands have taken over our everyday lives. To foster a good relationship with ourselves and the people around us wee need to recharge and wind down. A stay at one of our rooms gives you that and more! So book your stay now and let the power of the Cove wash over you!</p>
         </article>
         <img class="aboutImage" src="/Assets/about1.jpeg" alt="Image of the pool-area and backside of the hotel">
     </section>
     <section id="rooms">
-        <article class="budget">
+        <article class="budget fadeSection">
             <article class="budgetText">
                 <h2>Lucie</h2>
                 <h3>Budget-consious without compromising comfort</h3>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci, nemo, molestiae excepturi nesciunt aliquam vero velit suscipit soluta laboriosam iste aspernatur, commodi unde nulla libero! Velit explicabo voluptates blanditiis doloribus!</p>
+                <p>Comfort isn't a class-privilage at Lapin Cove, we believe everyone deserves a good holiday. No matter the budget! Our room Lucie is all you need to have a comfortable and calming stay.</p>
             </article>
             <img class="budgetImage" src="Assets/Budget-room1.jpeg" alt="picture of the Budget room Lapin Cove offers">
             <p class="budgetPrice">2$</p>
         </article>
-        <article class="standard">
+        <article class="standard fadeSection">
             <article class="standardText">
                 <h2>Amélie</h2>
                 <h3>An elivated standard of living </h3>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci, nemo, molestiae excepturi nesciunt aliquam vero velit suscipit soluta laboriosam iste aspernatur, commodi unde nulla libero! Velit explicabo voluptates blanditiis doloribus!</p>
+                <p>Our lovely and romantic room Amélie is the perfect choice for a nice getaway with all the comforts of everyday-luxury. Not to mention the smell of coffee and croissants waking you up and a stunning view!</p>
             </article>
             <img class="standardImage" src="Assets/Standard-room1.jpeg" alt="picture of the Standard room Lapin Cove offers">
             <p class="standardPrice">3$</p>
         </article>
-        <article class="luxury">
+        <article class="luxury fadeSection">
             <article class="luxuryText">
                 <h2>Celiné</h2>
                 <h3>A truly luxurious stay</h3>
-                <p>A true luxury experience where you feel pampered and cared for every minute of every day.</p>
+                <p>A true luxury stay where you feel pampered and cared for every minute of every day. Massage, charcuterie-boards, barista and more! All included in your Celiné-package. Book our room Celiné and get a truly royal experience.</p>
             </article>
             <img class="luxuryImage" src="Assets/Standard-room2.jpeg" alt="picture of the Luxury room Lapin Cove offers">
             <p class="luxuryPrice">4$</p>
         </article>
     </section>
-    <section id="features">
+    <section id="features" class="fadeSection">
         <div class="imageContainer">
             <img class="featuresImage" src="Assets/Feature5.jpg" alt="Woman on a bike in summer">
             <h3>Yatzy</h3>
@@ -80,57 +78,76 @@
         <div class="imageContainer">
             <img class="featuresImage" src="Assets/Feature4.jpeg" alt="Champange tower">
             <h3>Champagne Bar</h3>
-            <p class="featuresText">Experience the true meaning of a french vacation with champagne. With our unlimited bar the xxxxxx will flow. Just don't let the golden bubbles go to your head!</p>
+            <p class="featuresText">Experience the true meaning of a french vacation with champagne. With our unlimited bar you can let satan’s sparkles flow. Just don't let the golden bubbles go to your head!</p>
             <p class="featuresPrice">3$</p>
         </div>
         <div class="imageContainer">
             <img class="featuresImage" src="Assets/Feature21.jpg" alt="A male and female kissing while holding bikes">
             <h3>Electric bicycle</h3>
-            <p class="featuresText">Enhance your stay with our electrical bikes, perfect for discovering the breathtaking coastal trails and charming villages of Corsica. Effortlessly ride through stunning landscapes, uncover hidden gems all throughout your stay.</p>
+            <p class="featuresText">Enhance your stay with our electrical bikes, perfect for discovering the breathtaking coastal trails and charming villages of Corsica. Effortlessly ride through stunning landscapes and uncover hidden gems all throughout your stay.</p>
             <p class="featuresPrice">5$</p>
         </div>
     </section>
-    <section id="availability">
-        <div class="content home">
-        </div>
-    </section>
-    <section id="Booking">
+    <section id="booking" class="fadeSection">
         <form action="booking.php" method="post">
-            <select name="room" id="room-picker">
-                <option value="1">Budget</option>
-                <option value="2">Standard</option>
-                <option value="3">Luxury</option>
-            </select>
-            <input type="date" name="startDate" min="2025-01-01" max="2025-01-31">
-            <input type="date" name="endDate" min="2025-01-01" max="2025-01-31">
-            <input type="checkbox" name="features[]" value="1"> Electric bicycle
-            <input type="checkbox" name="features[]" value="2"> Sauna/Champagne Bar
-            <input type="checkbox" name="features[]" value="3"> Yatzy
-            <input type="text" name="transferCode"> 
-            <button type="submit" name="Book">Book</button>
+            <fieldset class="room">
+                <legend>Room</legend>
+                <select name="room" id="roomPicker">
+                    <option value="1">Lucie - 2$/night</option>
+                    <option value="2">Amélie - 3$/night</option>
+                    <option value="3">Celiné - 4$/night</option>
+                </select>
+            </fieldset>
+            <fieldset class="startDateField">
+                <legend>Arrival</legend>
+                <input type="date" name="startDate" id="startDate" min="2025-01-01" max="2025-01-31">
+            </fieldset>
+            <fieldset class="endDateField">
+                <legend>Departure</legend>
+                <input type="date" name="endDate" id="endDate" min="2025-01-01" max="2025-01-31">
+            </fieldset>
+            <fieldset class="featuresCheckbox">
+                <legend>Features</legend>
+                <input type="checkbox" name="features[]" value="1">
+                <label for="feature1">Electric bicycle - 5$</label>
+                <br>
+                <input type="checkbox" name="features[]" value="2">
+                <label for="feature2">Champagne Bar - 3$</label>
+                <br>
+                <input type="checkbox" name="features[]" value="3">
+                <label for="feature3">Yatzy - 1$</label>
+              </fieldset>
+              
+            <fieldset class="transferCodeInput">
+                <legend>Transfer code</legend>
+                <input type="text" name="transferCode" id="transferCode"> 
+            </fieldset>
+            <button type="submit" name="Book" id="book">Book</button>
         </form>
     </section>
-    <footer>
-        <article class="footerSocials">
+    <footer id="footer">
+        <article class="footerSocials fadeSection">
             <h3>Socials</h3>
             <ul>
-                <li><a href="#">Facebook</a></li>
-                <li><a href="#">Instagram</a></li>
-                <li><a href="#">Pinterest</a></li>
+                <li><a href="https://www.facebook.com">Facebook</a></li>
+                <li><a href="https://www.instagram.com">Instagram</a></li>
+                <li><a href="https://www.pinterest.se">Pinterest</a></li>
             </ul>
         </article>
-        <article class="footerContacts">
+        <article class="footerContacts fadeSection">
             <h3>Contacts</h3>
             <ul>
                 <li><a href="tel:+46703972897">0703972897</a></li>
                 <li><a href="mailto:jmn.westerlund@gmail.com">jmn.westerlund@gmail.com</a></li>
             </ul>
         </article>
-        <article class="footerAbout">
+        <article class="footerAbout fadeSection">
             <h3>About this project</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam aspernatur corporis est rem neque ea! Suscipit voluptatum ab ratione quis fugit repellendus, nostrum reiciendis. Dolore perferendis magnam maiores reiciendis et?</p>
+            <p>This is my contribution to the YRGOpelago assignment class of WU24. The assignment is to create a webbsite (desktop only) for an imaginary hotel with 3 bookable rooms in January 2025. You pay through the API via transfercodes you generate with a personal API-KEY. For mor information check out my <a href="https://github.com/Jennie-Westerlund/Lapin-Cove">repo</a> and the project webbsite <a href="https://www.yrgopelago.se">yrgopelago</a>.</p>
         </article>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="calendar.js"></script>
+    <script src="animations.js"></script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </html>

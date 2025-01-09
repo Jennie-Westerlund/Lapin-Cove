@@ -1,8 +1,7 @@
 /* variables */
 :root {
-    --Primary:rgb(215, 171, 132, 100);
     --accent: #E6C583;
-    --Dark: #362815;
+    --dark: #362815;
     --black: black;
     --white: white;
     --background:rgb(252, 248, 243);
@@ -12,12 +11,20 @@
 
     --titleFont:'Iowan Old Style', 'Times New Roman', serif;
     --bodyTextFont: 'Poppins', sans-serif;
+
+    --animationFirst:fadeIn 2s cubic-bezier(0.44, -0.05, 0.61, 1.06);
+    --animationSecond:fadeIn 4s cubic-bezier(0.44, -0.05, 0.61, 1.06);
+    --animationThird:fadeIn 5s cubic-bezier(0.44, -0.05, 0.61, 1.06);
 }
 
 @font-face {
     font-family: 'Iowan Old Style';
     src: url('Assets/Fonts/iowanoldst-bt/bitstream-iowan-old-style-bt-586c36a8d7712.ttf');
   }
+
+html {
+scroll-behavior:smooth;
+}
 
 * {
     box-sizing: border-box;
@@ -27,29 +34,51 @@ Body {
     margin: 0;
 }
 
+/* Animations */
+
+.fadeSection {
+    opacity: 0;
+    transform: translateY(20px); /* Slight slide up */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fadeSection.visible {
+    opacity: 1;
+    transform: translateY(0); /* Reset position */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 /* Fonts */
 h1 {
     font-size: 30px;
     font-family: var(--titleFont);
-    color: var(--Dark);
+    color: var(--dark);
 }
 
 
 h2 {
     font-size: 30px;
     font-family: var(--titleFont);
-    color: var(--Dark);
+    color: var(--dark);
 }
 
 h3 {
     font-size: 21px;
     font-family: var(--titleFont);
-    color: var(--Dark);
+    color: var(--dark);
 }
 
 p {
     font-size: 18px;
-    color: var(--Dark);
+    color: var(--dark);
     font-family: var(--bodyTextFont);
 }
 
@@ -72,12 +101,13 @@ nav {
     position: fixed;
     width: 100vw;
     z-index: 20;
+    animation: var(--animationThird);
 }
 
 .navLink {
     font-size: 20px;
     font-family: var(--bodyTextFont);
-    color: var(--Dark);
+    color: var(--dark);
     text-decoration: none;
     align-self: center;
 }
@@ -98,7 +128,7 @@ nav {
 .navLogoText {
     font-size: 26px;
     font-family: 'Iowan Old Style', 'Times New Roman', serif;
-    color: var(--Dark);
+    color: var(--dark);
     margin: 0;
 }
 
@@ -109,16 +139,16 @@ nav {
     background-color: var(--backgroundHeroFilter);
 }
 .heroVideo {
-    width: 100vw;
-    height: 780px;
+    width: 100%;
+    height: 790px;
     display: block;
     object-fit: cover;
     opacity: 40%;
 }
 
 .heroContent {
-    width: 100vw;
-    height: 780px;
+    width: 100%;
+    height: 790px;
     position: absolute;
     top: 0px;
     left: 0px;
@@ -131,6 +161,7 @@ nav {
 .heroLogo {
     width: 150px;
     margin: 0 0 100px 0;
+    animation: var(--animationFirst);
 }
 .ctaButton {
     border: none;
@@ -138,14 +169,18 @@ nav {
     background-color: var(--accent);
     padding: 1.5rem;
     margin: 0 0 100px 0;
-}
-
-.ctaButton a {
     font-size: 26px;
+    font-family: var(--bodyTextFont);
     color: var(--white);
     text-decoration: none;
     text-transform: uppercase;
+    animation: var(--animationSecond);
 }
+
+.ctaButton:hover {
+    background-color: #d5b26c;
+}
+
 
 /* About  */
 #about {
@@ -293,7 +328,7 @@ nav {
     overflow: hidden;
     display: inline-block;
     margin: 5px;
-    background-color: var(--Dark);
+    background-color: var(--dark);
 }
 
 .featuresImage {
@@ -341,7 +376,142 @@ nav {
     opacity: 30%;
 }
 
+/* Booking */
 
+form {
+    background-color: var(--accent);
+    display: grid;
+    grid-template-columns: auto auto auto;
+    row-gap: 2rem;
+    column-gap: 1rem;
+    justify-content: center;
+    justify-self: center;
+    margin: 3rem 5rem 3rem 5rem;
+    padding: 2rem;
+}
+
+legend {
+    font-family: var(--bodyTextFont);
+    font-size: 18px;
+    color: var(--dark);
+}
+
+.room {
+    padding: 0rem;
+}
+
+#roomPicker {
+    appearance: none;
+    background-color: var(--white);
+    border: none;
+    padding: 0.5rem 2.5rem 0.5rem 0.75rem;
+    font-size: 1rem;
+    font-family: var(--bodyTextFont);
+    color: var(--dark);
+}
+
+select {
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%0A%20%20%3Cpath%20stroke%3D%22rgb%28226%2C%20217%2C%20207%29%22%20stroke-linecap%3D%22butt%22%20stroke-linejoin%3D%22miter%22%20stroke-width%3D%221.5%22%20d%3D%22M6%208l4%204%204-4%22/%3E%0A%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0rem center;
+}
+
+.startDateField {
+    padding: 0rem;
+}
+
+#startDate {
+    appearance: none;
+    background-color: var(--white);
+    border: none;
+    padding: 0.35rem 0rem 0.35rem 0.75rem;
+    font-size: 1rem;
+    font-family: var(--bodyTextFont);
+    color: var(--dark);
+}
+
+.endDateField {
+    padding: 0rem;
+}
+
+#endDate {
+    appearance: none;
+    background-color: var(--white);
+    border: none;
+    padding: 0.35rem 0rem 0.35rem 0.75rem;
+    font-size: 1rem;
+    font-family: var(--bodyTextFont);
+    color: var(--dark);
+}
+
+.featuresCheckbox {
+    display: flex;
+    flex-direction: row;
+    grid-column: span 3;
+    padding: 0rem;
+}
+
+fieldset {
+    border: none;
+}
+
+/* Target all checkboxes inside the fieldset */
+fieldset input[type="checkbox"] {
+    appearance: none;
+    background-color: var(--white);
+    accent-color: var(--dark);
+    width: 20px;
+    height: 20px;
+}
+
+fieldset input[type="checkbox"]:hover {
+    outline: 2px solid var(--dark);
+}
+
+/* Checked state styling */
+fieldset input[type="checkbox"]:checked {
+    background-color: var(--dark);
+}
+
+.featuresCheckbox label {
+    font-family: var(--bodyTextFont);
+    color: var(--dark);
+    font-size: 1rem;
+    padding: 0 1rem 0 0.5rem;
+}
+
+.transferCodeInput {
+    padding: 0rem;
+}
+#transferCode {
+    appearance: none;
+    background-color: var(--white);
+    border: none;
+    padding: 0.35rem 0rem 0.35rem 0.75rem;
+    font-size: 1rem;
+    font-family: var(--bodyTextFont);
+    color: var(--dark);
+}
+
+#book {
+    border: none;
+    outline: none;
+    background-color: var(--white);
+    padding: 0rem;
+    width: 8rem;
+    height: 4rem;
+    font-size: 20px;
+    font-family: var(--bodyTextFont);
+    color: var(--accent);
+    text-decoration: none;
+    text-transform: uppercase;
+    align-self: flex-end;
+}
+
+#book:hover {
+    background-color: var(--dark);
+    color: var(--accent);
+}
 
 /* Footer */
 

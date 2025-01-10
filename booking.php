@@ -7,7 +7,7 @@ require 'vendor/autoload.php';
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
-$database = new PDO('sqlite:' . __DIR__ . '/Backend/lapinCove.db');
+$database = new PDO('sqlite:' . __DIR__ . '/Backend/LapinCove.db');
 
 /* My functions  */
 function amountOfDays($date1, $date2)
@@ -64,7 +64,7 @@ function makeDeposit(string $transferCode): bool
 function getBookedDates($roomId) /* Get booked dates depending on roomId from db for flatpickr */
 {
     global $database;
-    $stmt = $database->prepare("SELECT Start_date, End_date FROM Bookings WHERE Room_id = :roomId");
+    $stmt = $database->prepare("SELECT start_date, end_date FROM Bookings WHERE room_id = :roomId");
     $stmt->execute([':roomId' => $roomId]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -80,7 +80,7 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
     $transferCode = $_POST['transferCode'];
 
     /* Check for overlapping bookings */
-    $checkQuery = " SELECT COUNT(*) FROM Bookings WHERE Room_id = :roomId AND ((Start_date <= :endDate AND End_date >= :startDate))
+    $checkQuery = " SELECT COUNT(*) FROM Bookings WHERE room_id = :roomId AND ((start_date <= :endDate AND end_date >= :startDate))
     ";
     $checkStmt = $database->prepare($checkQuery);
     $checkStmt->execute([
@@ -95,7 +95,7 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
         echo "Sorry, the selected room is already booked for the specified dates.";
     } else {
         /* Calculate price of the booking*/
-        $roomPriceQuery = "SELECT Prize FROM Rooms WHERE id = :roomId";
+        $roomPriceQuery = "SELECT price FROM Rooms WHERE id = :roomId";
         $roomPriceStmt = $database->prepare($roomPriceQuery);
         $roomPriceStmt->execute([
             ':roomId' => $roomId,
@@ -106,7 +106,7 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
 
         /* Calculate price of features */
         $featureTotalPrice = 0; /* Initialize total feature price */
-        $featurePriceQuery = "SELECT Prize FROM Features WHERE id = :featureId";
+        $featurePriceQuery = "SELECT price FROM Features WHERE id = :featureId";
         $featurePriceStmt = $database->prepare($featurePriceQuery);
 
         foreach ($features as $featureId) {
@@ -141,7 +141,7 @@ if (isset($_POST['startDate'], $_POST['endDate'], $_POST['room'])) {
 
 
         /* Using a prepared statement to safely insert the data, if not already booked */
-        $bookingQuery = "INSERT INTO Bookings (Room_id, Start_date, End_date) VALUES (:roomId, :startDate, :endDate)";
+        $bookingQuery = "INSERT INTO Bookings (room_id, start_date, end_date) VALUES (:roomId, :startDate, :endDate)";
         $statement = $database->prepare($bookingQuery);
         $statement->execute([
             ':roomId' => $roomId,

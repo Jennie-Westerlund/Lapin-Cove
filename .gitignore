@@ -2,5 +2,5 @@
 .env 
 node_modules
 .vscode
-test.db
+lapinCove.db
 /vendor

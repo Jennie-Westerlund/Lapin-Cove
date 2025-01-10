@@ -63,3 +63,16 @@ example.js:10-21 - Your solution seems to be working, but instead of these rows,
 &star; The hotel has the ability to use external data (images, videos, text etc) when producing succesful booking responses that the customers get.
 
 &star; The hotel manager has an `admin.php` page - accessible only by using your API_KEY - where different data can be altered, such as room prices, the star rating, discount levels and whatever you can think of.
+
+
+
+
+#JESPERS CODE REVIEW
+
+* It coould be beneficial to seperate the stylesheet in sections. That way it's easier to collaborators to easily find the style for each section.
+* Nice comments on fuunctions in both php and javascript.
+* Its a good practice to split the header/footer in different files and require in. Easier to manage if the website has alot of pages.
+* I can't see if you sanitize your inputs before sending it away! on row 75 in booking.php. it could be dangerous if that is the cae (but what do I know!!!)
+* IN your database. A table for discounts would make it easier to change values for what % discount you offer and what actions that are needed for the customer to get a GREAT DEAL.
+* on row 101 in index.html you have started to set min and max values for your calendar, and you also have that on row 15 in your calendar.js. If it isn't as a "fallback" if one of them doesnt load, you only need one of them.
+* $database = new PDO('sqlite:' . __DIR__ . '/Backend/LapinCove.db') The database connection is does lack error handlings. 

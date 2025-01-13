@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
             minDate: "2025-01-01",
             maxDate: "2025-01-31",
             disable: bookedDates.map(booking => ({
-                from: booking.Start_date,
-                to: booking.End_date
+                from: booking.start_date,
+                to: booking.end_date
             }))
         };
 

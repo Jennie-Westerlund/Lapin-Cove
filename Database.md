@@ -1,4 +1,4 @@
-# This project uses SQLite and the name of the database-file is lapinCove.db
+# This project uses SQLite and the name of the database-file is LapinCove.db
 
 ### SQL Queries to Recreate the Database
 

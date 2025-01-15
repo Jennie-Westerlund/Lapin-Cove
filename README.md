@@ -1,7 +1,7 @@
 # Lapin-Cove
-A hotel for the Yrgopelago assignment, This webbsite is to book rooms (only for January 2025) and additional features for a fictional hotel. 
+A hotel for the Yrgopelago assignment, This webbsite is to book rooms (only for January 2025) and additional features for a fictional hotel. Url: https://jenniewesterlund.se/Lapin-Cove/
 
-## SOme of the requrements from the teacher
+## Some of the requrements from the teacher
 
 Below you'll find a list of requirements which need to be fulfilled in order to complete the project.
 
